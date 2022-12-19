@@ -15,12 +15,12 @@ public class highScoreScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.highestScore < PlayerManager.diamondsCounter)
+        if (PlayerManager.instance.highestScore < PlayerManager.instance.diamondsCounter)
         {
-            PlayerManager.highestScore = PlayerManager.diamondsCounter;
-            PlayerPrefs.SetInt("highscore", PlayerManager.highestScore);
+            PlayerManager.instance.highestScore = PlayerManager.instance.diamondsCounter;
+            PlayerPrefs.SetInt("highscore", PlayerManager.instance.highestScore);
         }
-        string text = $"Highest score: {PlayerManager.highestScore}";
+        string text = $"Highest score: {PlayerManager.instance.highestScore}";
         highScoreText.SetText(text);
     }
 }

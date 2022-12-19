@@ -8,16 +8,17 @@ public class GameManager : MonoBehaviour
     public GameObject[] normalLevels;
     public float zSpawn = 36;
     public float levelLength = 36;
-    private int numberOfLevels = 5;
     private List<GameObject> activeLevels = new List<GameObject>();
     private int counter = 0;
-
 
     public Transform playerTransform;
 
     void Start()
     {
-        for (int i = 0; i < numberOfLevels; i++)
+        int levelsAmount = 5;
+        if (PlayerPrefs.GetInt("settings") != 0)
+            levelsAmount = PlayerPrefs.GetInt("settings");
+        for (int i = 0; i < levelsAmount; i++)
         {
             SpawnLevel(Random.Range(0, baseLevels.Length), baseLevels);
         }

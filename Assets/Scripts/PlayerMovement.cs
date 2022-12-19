@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private int line;
     private bool _canJump = true;
     private bool _canSlide = true;
-    public Animation anim;
+    public AudioSource audio;
+    public Animator animator;
 
 
     // Start is called before the first frame update
@@ -56,12 +58,13 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, 1.35f);
+        return Physics.Raycast(transform.position, Vector3.down, 1.32f);
     }
 
     IEnumerator Slide()
     {
-        anim.Stop();
+        animator.Play("NotMoving");
+        audio.Stop();
         _canSlide = false;
         _canJump = false;
         transform.Rotate(-90f, 0f, 0f);
@@ -71,7 +74,8 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(transform.position.x, 1.5f, transform.position.z);
         _canJump = true;
         _canSlide = true;
-        anim.Play();
+        animator.Play("SteveRun");
+        audio.Play();
     }
 
     public void Jump()
@@ -81,11 +85,12 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator _Jump()
     {
-        anim.Stop();
+        audio.Stop();
+        animator.Play("Jump");
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        yield return new WaitForSeconds(1.2f);
-        anim.Play();
+        yield return new WaitForSeconds(1.25f);
         _canJump = true;
+        audio.Play();
     }
 
 }
